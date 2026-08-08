@@ -1,109 +1,118 @@
-# IFM 2026 Poster: Omega-3 Exposure and Cognition in Older Adults
+IFM 2026 Poster: Omega-3 Exposure and Cognition in Older Adults
 
-This repository contains the analysis code, outputs, and supporting documentation for an IFM 2026 poster examining the association of omega-3 supplement use and dietary EPA+DHA intake with cognitive performance among US adults aged 60 years or older.
+This repository contains the analysis code, outputs, and supporting documentation for an IFM 2026 poster examining associations of omega-3 supplement use and dietary EPA+DHA intake with cognitive performance among US adults aged 60 years or older.
 
-The analysis uses data from the 2011–2012 and 2013–2014 cycles of the National Health and Nutrition Examination Survey (NHANES).
+The analysis uses the 2011–2012 and 2013–2014 cycles of the National Health and Nutrition Examination Survey (NHANES) and has a cross-sectional design.
 
-## Study overview
+Study overview
 
 The study evaluates two omega-3 exposures:
 
-1. Past-30-day use of identified omega-3 supplements.
-2. Day-one dietary intake of eicosapentaenoic acid and docosahexaenoic acid, expressed as combined EPA+DHA intake.
+Past-30-day use of identified omega-3 supplements.
+
+Day-one dietary intake of eicosapentaenoic acid and docosahexaenoic acid, expressed as combined EPA+DHA intake.
 
 The outcome is a global cognition z-score derived from four cognitive measures:
 
-- CERAD immediate learning;
-- CERAD delayed recall;
-- Animal Fluency;
-- Digit Symbol Substitution Test.
+CERAD immediate learning;
+
+CERAD delayed recall;
+
+Animal Fluency;
+
+Digit Symbol Substitution Test.
 
 The primary cognitive outcome requires complete data for all four components.
 
 All regression models account for the complex NHANES survey design and are adjusted for:
 
-- age;
-- sex;
-- race and ethnicity;
-- educational attainment;
-- family income-to-poverty ratio;
-- body mass index;
-- diagnosed diabetes;
-- PHQ-9 score.
+age;
 
-## Repository structure
+sex;
 
-### `01_main_analysis`
+race and ethnicity;
 
-- `omega3_nhanes_2011_2014_corrected.R`  
-  Rebuilds the analytic variables from the raw NHANES XPT files and runs the primary supplement, dietary, and sensitivity analyses.
+educational attainment;
 
-- `omega3_reanalysis.py`  
-  Provides an independent Python reconstruction and audit of the main analyses. It uses the past-30-day supplement exposure, requires a complete cognitive battery, and applies the Day-one dietary recall weight to dietary EPA+DHA models.
+family income-to-poverty ratio;
 
-### `02_secondary_analysis`
+body mass index;
 
-- `secondary_analysis_plan_2026-07-30.md`  
-  Dated analysis plan for the active-comparator and cycle-consistency analyses.
+diagnosed diabetes;
 
-- `run_secondary_analyses.R`  
-  Runs the active-comparator, cycle-specific, omega-3-by-cycle interaction, and exploratory formulation analyses.
+PHQ-9 score.
 
-### `03_outputs`
+Repository structure
 
-- `r_key_models.csv`  
-  Estimates from the primary supplement, dietary, and sensitivity models.
+main_analysis
 
-- `r_sample_flow.csv`  
-  Participant counts used in the poster sample-flow figure.
+omega3_nhanes_2011_2014_analysis.RReconstructs the analytic variables from the raw NHANES XPT files and runs the main R analyses.
 
-- `baseline_characteristics_poster.tsv`  
-  Survey-weighted participant characteristics used on the poster.
+omega3_analysis.pyProvides an independent Python reconstruction and audit of the main analyses. It uses the past-30-day supplement exposure, requires a complete cognitive battery, applies the Day-one dietary recall weight to dietary EPA+DHA models, and writes the analytic CSV required by the secondary R script.
 
-- `active_comparator_counts.csv`  
-  Group counts for the active-comparator analysis.
+secondary_analysis
 
-- `secondary_analysis_results.csv`  
-  Full results from the secondary analyses.
+README_secondary_analysis_plan.mdDated analysis plan for the active-comparator and cycle-consistency analyses.
 
-- `secondary_analysis_summary.md`  
-  Concise interpretation and poster-reporting summary.
+secondary_analysis.RRuns the active-comparator, cycle-specific, and omega-3-by-cycle interaction analyses. This script must be run after main_analysis/omega3_analysis.py, because it reads the analytic CSV created by the Python reconstruction.
 
-- `python_key_results.json`  
-  Machine-readable results from the Python reanalysis for comparison with the R outputs.
+outputs
 
-- `formulation_counts.csv`  
-  Unweighted subgroup sizes for the exploratory omega-3 formulation analysis.
+r_key_models.csvEstimates from the main R analyses.
 
-- `formulation_exploratory_results.csv`  
-  Adjusted formulation contrasts and the overall survey-design Wald test.
+r_sample_flow.csvParticipant counts used in the poster sample-flow figure.
 
-## Analytic sample
+baseline_characteristics_poster.tsvSurvey-weighted participant characteristics used on the poster.
+
+active_comparator_counts.csvGroup counts for the active-comparator analysis.
+
+secondary_analysis_results.csvResults from the active-comparator and cycle-consistency analyses.
+
+python_key_results.jsonMachine-readable results from the independent Python reconstruction.
+
+formulation_counts.csvUnweighted subgroup sizes for the exploratory formulation analysis.
+
+formulation_specific_exploratory_results.csvAdjusted exploratory formulation contrasts and the overall survey-design Wald test.
+
+Other files
+
+requirements.txt — pinned Python dependencies.
+
+data/README.md — required NHANES files and official download links.
+
+R_DEPENDENCIES.md — R dependency and installation instructions.
+
+VALIDATION.md — validation status, environment, checks, and final clean-run record.
+
+Analytic sample
 
 A total of 3,472 adults aged 60 years or older were assessed for eligibility.
 
 For the supplement analysis:
 
-- 881 participants were excluded because of incomplete cognition data, missing supplement exposure, or missing core covariates;
-- 2,591 participants remained in the primary supplement model.
+881 participants were excluded because of incomplete cognition data, missing supplement exposure, or missing core covariates;
+
+2,591 participants remained in the primary supplement model.
 
 For the dietary analysis:
 
-- a further 138 participants lacked a reliable Day-one dietary recall or other required dietary-model data;
-- 2,453 participants remained in the dietary EPA+DHA model.
+a further 138 participants lacked a reliable Day-one dietary recall or other required dietary-model data;
 
-## Exposure definitions
+2,453 participants remained in the dietary EPA+DHA model.
 
-### Omega-3 supplement use
+Exposure definitions
+
+Omega-3 supplement use
 
 Supplement exposure is based on identified omega-3-containing products reported during the dedicated past-30-day dietary supplement interview.
 
 Participants are classified as:
 
-- omega-3 supplement users;
-- omega-3 non-users.
+omega-3 supplement users;
 
-### Dietary EPA+DHA
+omega-3 non-users.
+
+Dietary EPA+DHA
 
 Dietary exposure is based on combined EPA and DHA intake from the Day-one 24-hour dietary recall.
 
@@ -111,115 +120,160 @@ Because this measure reflects intake from a single recall day, it is treated as 
 
 The supplement and dietary coefficients represent different exposure definitions and should not be directly compared as though they were measured on the same scale.
 
-## Survey design and weighting
+Survey design and weighting
 
-All analyses incorporate the NHANES complex survey design, including:
+All analyses incorporate the NHANES complex survey design, including sampling weights, strata, and primary sampling units.
 
-- sampling weights;
-- strata;
-- primary sampling units.
+The pooled R analyses divide the two-year weights by two to create combined four-year weights:
 
-The pooled R analyses divide the two-year weights by two to create combined four-year weights.
+supplement models use WTMEC2YR / 2;
 
-- Supplement models use the MEC examination weight: `WTMEC2YR / 2`.
-- Dietary EPA+DHA models use the Day-one dietary recall weight: `WTDRD1 / 2`.
+dietary EPA+DHA models use WTDRD1 / 2.
 
-The Python audit uses `WTDRD1` directly for the dietary model. Dividing every survey weight by the same constant changes only the common scale of the weights and does not change the fitted regression estimates.
+The Python audit uses WTDRD1 directly for the dietary model. Dividing every survey weight by the same constant changes only the common scale of the weights and does not change the fitted regression estimates.
 
-## Main results
+Main results
 
-### Omega-3 supplement use
+Omega-3 supplement use
 
 Past-30-day omega-3 supplement users had higher adjusted global cognition scores than non-users:
 
-- β = 0.151;
-- 95% CI: 0.076 to 0.226;
-- p < 0.001.
+β = 0.151;
 
-### Dietary EPA+DHA
+95% CI: 0.076 to 0.226;
+
+p < 0.001.
+
+Dietary EPA+DHA
 
 Higher Day-one dietary EPA+DHA intake was positively associated with global cognition:
 
-- β = 0.217;
-- 95% CI: 0.031 to 0.403;
-- p = 0.025.
+β = 0.217;
 
-## Secondary analyses
+95% CI: 0.031 to 0.403;
 
-### Active-comparator analysis
+p = 0.025.
+
+Secondary analyses
+
+Active-comparator analysis
 
 To reduce, although not eliminate, the influence of general supplement-taking behaviour, 499 omega-3 supplement users were compared with 1,211 users of non-omega-3 supplements.
 
 The association remained positive:
 
-- β = 0.149;
-- 95% CI: 0.064 to 0.234;
-- p = 0.002.
+β = 0.149;
 
-### Cycle consistency
+95% CI: 0.064 to 0.234;
+
+p = 0.002.
+
+Cycle consistency
 
 The supplement association was examined separately in each NHANES cycle:
 
-- 2011–2012: β = 0.157;
-- 2013–2014: β = 0.139.
+2011–2012: β = 0.157;
+
+2013–2014: β = 0.139.
 
 The pooled omega-3-by-cycle interaction test showed no evidence that the association differed between cycles:
 
-- p for interaction = 0.662.
+p for interaction = 0.662.
 
-### Exploratory formulation analysis
+Exploratory formulation analysis
 
-Omega-3 formulation was explored among the 499 supplement users.
-
-Fish oil or cod-liver oil was used as the reference category, while very rare products were pooled into an other/mixed group.
+Omega-3 formulation was explored among the 499 supplement users. Fish oil or cod-liver oil was used as the reference category, while rare products were pooled into an other/mixed group.
 
 The overall formulation comparison was not statistically significant:
 
-- Wald F(3,14) = 0.72;
-- p = 0.557.
+Wald F(3,14) = 0.72;
 
-The non-fish-oil formulation groups were small and produced wide confidence intervals. No formulation-specific conclusions are therefore drawn.
+p = 0.557.
 
-## Baseline characteristics
+The non-fish-oil formulation groups were small and produced wide confidence intervals. No formulation-specific conclusions are drawn.
 
-The poster baseline table compares:
+Baseline characteristics
 
-- 499 omega-3 supplement users;
-- 2,092 omega-3 non-users.
-
-It reports survey-weighted means or percentages together with absolute standardized mean differences.
+The poster baseline table compares 499 omega-3 supplement users with 2,092 non-users and reports survey-weighted means or percentages with absolute standardized mean differences.
 
 Differences in education, income, smoking, diabetes, and physical activity indicate that residual confounding and healthy-user bias remain plausible despite multivariable adjustment.
 
-## Interpretation
+Interpretation
 
-The findings show a positive cross-sectional association between omega-3 exposure and global cognition in older US adults.
+The findings show positive cross-sectional associations between omega-3 exposure and global cognition in older US adults.
 
-They do not establish that omega-3 supplements or dietary EPA+DHA caused better cognitive performance.
-
-The observational design, single-day dietary assessment, potential exposure misclassification, residual confounding, and healthy-user bias limit causal interpretation.
+They do not establish that omega-3 supplements or dietary EPA+DHA caused better cognitive performance. The cross-sectional design, single-day dietary assessment, possible exposure misclassification, residual confounding, and healthy-user bias limit causal interpretation.
 
 The results should not be used to recommend omega-3 supplementation solely for cognitive protection.
 
-## Context with recent evidence
+Context with recent evidence
 
-The NHANES findings are interpreted alongside recent evidence from:
+The NHANES findings are interpreted alongside recent evidence from the KLOSCAD longitudinal cohort, ADNI cohort, and PreventE4 randomized trial. These studies do not provide a consistent causal picture, so the poster presents the NHANES findings as observational evidence requiring cautious interpretation.
 
-- the KLOSCAD longitudinal cohort;
-- the ADNI cohort;
-- the PreventE4 randomized trial.
+Dependencies
 
-These studies do not provide a consistent causal picture. The poster therefore presents the NHANES findings as observational evidence that requires cautious interpretation.
+Python
 
-## Reproduction
+Python 3.12 is recommended. From the repository root:
 
-Raw NHANES XPT files are not included in this repository because they are publicly available and would substantially increase repository size.
+python3 -m venv .venv
+source .venv/bin/activate
+python3 -m pip install --upgrade pip
+python3 -m pip install -r requirements.txt
 
-The R and Python scripts rebuild the analysis using the required 2011–2012 (`_G`) and 2013–2014 (`_H`) NHANES component files.
+R
 
-Local input and output directory paths may need to be edited before running the scripts.
+The main R pipeline requires haven, survey, and dplyr. The secondary R script uses base R only. See R_DEPENDENCIES.md.
 
-## Important note
+Data preparation
+
+Raw NHANES XPT files are not committed because they are publicly available and would substantially increase repository size.
+
+Download the 26 required files into tmp/raw_nhanes/ as described in data/README.md.
+
+Run the analysis
+
+Run all commands from the repository root.
+
+1. Create the Python environment
+
+python3 -m venv .venv
+source .venv/bin/activate
+python3 -m pip install --upgrade pip
+python3 -m pip install -r requirements.txt
+
+2. Reconstruct the data and run the independent Python analysis
+
+python3 main_analysis/omega3_analysis.py
+
+This writes results to tmp/reanalysis/, including:
+
+tmp/reanalysis/key_results.json;
+
+tmp/reanalysis/rebuilt_analytic_data.csv.
+
+3. Run the secondary R analyses
+
+This step must follow Step 2 because it consumes the Python-created analytic CSV.
+
+Rscript secondary_analysis/secondary_analysis.R \
+  tmp/reanalysis/rebuilt_analytic_data.csv \
+  tmp/secondary_output
+
+4. Run the independent main R pipeline
+
+Rscript main_analysis/omega3_nhanes_2011_2014_analysis.R \
+  tmp/raw_nhanes \
+  tmp/r_output
+
+The main R and Python pipelines each reconstruct the analytic variables directly from the original public NHANES component files. In this repository, “reconstruct” means merging participant-level component files, deriving the exposures, outcome, covariates, survey weights, and analytic samples, and then refitting the reported models.
+
+5. Review validation outputs
+
+Compare the fresh outputs with the committed files in outputs/ and complete the final clean-run section in VALIDATION.md.
+
+Important note
 
 This repository supports a conference poster and should not be interpreted as a clinical guideline or treatment recommendation.
-All analysis code in this repository was generated with the assistance of generative AI tools. The study design, analytic decisions, variable definitions, interpretation of results, and final reporting were determined and reviewed by the authors. The generated code and statistical outputs were checked and validated by the authors, who remain fully responsible for the accuracy and integrity of the work.
+
+All analysis code in this repository was generated with the assistance of generative AI tools. The study design, analytic decisions, variable definitions, interpretation of results, and final reporting were determined and reviewed by the authors. The authors remain fully responsible for the accuracy and integrity of the work.
