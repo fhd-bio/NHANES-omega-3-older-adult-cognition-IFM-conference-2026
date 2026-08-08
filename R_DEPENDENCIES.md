@@ -1,0 +1,49 @@
+# R dependencies
+
+## Recommended R version
+
+Use R 4.3 or later.
+
+## Main R analysis
+
+`main_analysis/omega3_nhanes_2011_2014_analysis.R` requires:
+
+- `haven`
+- `survey`
+- `dplyr`
+
+Install them from CRAN:
+
+```r
+install.packages(
+  c("haven", "survey", "dplyr"),
+  repos = "https://cloud.r-project.org"
+)
+```
+
+Then run the script from the repository root:
+
+```bash
+Rscript main_analysis/omega3_nhanes_2011_2014_analysis.R \
+  tmp/raw_nhanes \
+  tmp/r_output
+```
+
+The script records `sessionInfo()` in `tmp/r_output/r_analysis_report.txt`. Retain that output as the authoritative record of the R version and package versions used for the final clean run.
+
+## Secondary R analysis
+
+`secondary_analysis/secondary_analysis.R` uses base R and does not require additional packages.
+
+It must be run after the Python reconstruction because its default input is `tmp/reanalysis/rebuilt_analytic_data.csv`, which is created by `main_analysis/omega3_analysis.py`.
+
+```bash
+python3 main_analysis/omega3_analysis.py
+
+Rscript secondary_analysis/secondary_analysis.R \
+  tmp/reanalysis/rebuilt_analytic_data.csv \
+  tmp/secondary_output
+```
+
+The secondary script records `sessionInfo()` in `tmp/secondary_output/secondary_analysis_report.txt`.
+
