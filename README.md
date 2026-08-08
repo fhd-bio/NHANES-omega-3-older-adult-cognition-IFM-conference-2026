@@ -78,7 +78,7 @@ Other files
 
 requirements.txt — pinned Python dependencies.
 
-data/README.md — required NHANES files and official download links.
+Data README.md — required NHANES files and official download links.
 
 R_DEPENDENCIES.md — R dependency and installation instructions.
 
@@ -229,7 +229,7 @@ Data preparation
 
 Raw NHANES XPT files are not committed because they are publicly available and would substantially increase repository size.
 
-Download the 26 required files into tmp/raw_nhanes/ as described in data/README.md.
+Download the 26 required files into tmp/raw_nhanes/ as described in [Data README.md](Data%20README.md).
 
 Run the analysis
 
