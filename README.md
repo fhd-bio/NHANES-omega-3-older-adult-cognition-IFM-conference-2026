@@ -59,7 +59,8 @@ All regression models account for the complex NHANES survey design and are adjus
 - [`requirements.txt`](requirements.txt) — pinned Python dependencies.
 - [`Data README.md`](Data%20README.md) — required NHANES files and official download links.
 - [`R_DEPENDENCIES.md`](R_DEPENDENCIES.md) — R dependency and installation instructions.
-- `VALIDATION.md` — validation status, environment, checks, and final clean-run record; to be added after the final clean R run.
+- [`Validation_check/VALIDATION.md`](Validation_check/VALIDATION.md) — completed clean-run validation record, including the tested commit, environment, checks, and reproduced results.
+- [`Validation_check/Validation_check.ipynb`](Validation_check/Validation_check.ipynb) — executed Google Colab notebook supporting the validation record.
 
 ## Analytic sample
 
@@ -242,9 +243,9 @@ Rscript main_analysis/omega3_nhanes_2011_2014_analysis.R \
 
 The main R and Python pipelines each reconstruct the analytic variables directly from the original public NHANES component files. In this repository, “reconstruct” means merging participant-level component files, deriving the exposures, outcome, covariates, survey weights, and analytic samples, and then refitting the reported models.
 
-### 5. Review validation outputs
+### 5. Review the completed validation record
 
-Compare the fresh outputs with the committed files in `outputs/` and complete the final clean-run section in `VALIDATION.md` after that file is added.
+The documented clean run successfully reproduced the committed primary and secondary results. See [`Validation_check/VALIDATION.md`](Validation_check/VALIDATION.md) and the supporting executed notebook, [`Validation_check/Validation_check.ipynb`](Validation_check/Validation_check.ipynb).
 
 ## Important note
 
