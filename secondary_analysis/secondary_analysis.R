@@ -3,7 +3,7 @@
 # Prespecified secondary analyses dated 2026-07-30.
 #
 # This script uses the analytic dataset produced by:
-#   omega3_nhanes_2011_2014_analysis.R
+#   main_analysis/omega3_analysis.py
 #
 # Its Taylor-linearized WLS implementation is algebraically equivalent to the
 # Gaussian svyglm calculation for this stratified one-stage NHANES design. It
