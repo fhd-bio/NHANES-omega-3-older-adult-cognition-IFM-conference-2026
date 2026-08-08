@@ -8,9 +8,9 @@
 #   2. Cognition: complete four-component battery.
 #   3. Dietary EPA+DHA: reliable day-one recall, analyzed with WTDRD1.
 #
-# Sensitivity analyses include an alternative recall-day supplement definition,
-# exclude self-reported stroke, add lifestyle covariates, and mutually adjust
-# dietary intake for supplement use and total energy.
+# Additional analyses include an alternative recall-day supplement definition,
+# exclusion of self-reported stroke, and mutual adjustment of dietary intake
+# for supplement use and total energy.
 
 
 required_packages <- c("haven", "survey", "dplyr")
@@ -131,7 +131,6 @@ build_cycle <- function(cycle) {
   dpq <- read_cycle_file("DPQ", cycle)
   mcq <- read_cycle_file("MCQ", cycle)
   smq <- read_cycle_file("SMQ", cycle)
-  alq <- read_cycle_file("ALQ", cycle)
   paq <- read_cycle_file("PAQ", cycle)
   ds1 <- read_cycle_file("DS1IDS", cycle)
   ds2 <- read_cycle_file("DS2IDS", cycle)
@@ -217,16 +216,6 @@ build_cycle <- function(cycle) {
       )
     )
 
-  alcohol <- alq %>%
-    transmute(
-      SEQN,
-      current_alcohol = case_when(
-        ALQ101 == 2 | ALQ120Q == 0 ~ 0,
-        dplyr::between(ALQ120Q, 1, 366) ~ 1,
-        TRUE ~ NA_real_
-      )
-    )
-
   activity <- paq %>%
     transmute(
       SEQN,
@@ -254,7 +243,6 @@ build_cycle <- function(cycle) {
     left_join(depression %>% select(SEQN, phq9_total), by = "SEQN") %>%
     left_join(mcq %>% select(SEQN, MCQ160F), by = "SEQN") %>%
     left_join(smoking, by = "SEQN") %>%
-    left_join(alcohol, by = "SEQN") %>%
     left_join(activity, by = "SEQN") %>%
     left_join(ds30_total %>% select(SEQN, DSD010), by = "SEQN") %>%
     left_join(formulation_by_person, by = "SEQN") %>%
@@ -439,24 +427,6 @@ model_stroke_free <- svyglm(
   design = stroke_design
 )
 
-lifestyle_variables <- c(
-  "smoking_status", "current_alcohol", "recreational_activity"
-)
-lifestyle <- complete_rows(
-  supplement_primary, lifestyle_variables
-)
-lifestyle_design <- make_design(lifestyle, "WTMEC4YR")
-model_lifestyle <- svyglm(
-  as.formula(
-    paste(
-      "global_cognition_complete ~ omega_user_30d +",
-      "current_alcohol + recreational_activity + smoking_status +",
-      adjustment_terms
-    )
-  ),
-  design = lifestyle_design
-)
-
 tidy_model <- function(fitted_model, model_name, focus_terms = NULL) {
   coefficient_table <- as.data.frame(summary(fitted_model)$coefficients)
   coefficient_table$term <- rownames(coefficient_table)
@@ -503,9 +473,6 @@ key_models <- bind_rows(
   ),
   tidy_model(
     model_stroke_free, "Stroke-excluded sensitivity", "omega_user_30d"
-  ),
-  tidy_model(
-    model_lifestyle, "Lifestyle-adjusted sensitivity", "omega_user_30d"
   )
 )
 
@@ -754,15 +721,13 @@ sample_flow <- data.frame(
     "Adults aged 60 years or older with cognition file linkage",
     "Original complete-case analysis",
     "Complete four-component battery and primary covariates",
-    "Reliable day-one dietary recall and dietary model covariates",
-    "Complete lifestyle sensitivity-analysis covariates"
+    "Reliable day-one dietary recall and dietary model covariates"
   ),
   n = c(
     nrow(data),
     nrow(accepted),
     nrow(supplement_primary),
-    nrow(dietary_primary),
-    nrow(lifestyle)
+    nrow(dietary_primary)
   )
 )
 
@@ -857,7 +822,6 @@ saveRDS(
     dietary_primary = model_dietary,
     joint_energy = model_joint_energy,
     stroke_free = model_stroke_free,
-    lifestyle = model_lifestyle,
     spline = model_spline
   ),
   file.path(output_dir, "r_fitted_models.rds")
