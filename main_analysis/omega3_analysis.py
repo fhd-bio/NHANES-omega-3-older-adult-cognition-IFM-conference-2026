@@ -89,7 +89,6 @@ def build_cycle(cycle: str) -> tuple[pd.DataFrame, pd.DataFrame]:
     dpq = read_xpt("DPQ", cycle)
     mcq = read_xpt("MCQ", cycle)
     smq = read_xpt("SMQ", cycle)
-    alq = read_xpt("ALQ", cycle)
     paq = read_xpt("PAQ", cycle)
     ds1 = read_xpt("DS1IDS", cycle)
     ds2 = read_xpt("DS2IDS", cycle)
@@ -156,16 +155,6 @@ def build_cycle(cycle: str) -> tuple[pd.DataFrame, pd.DataFrame]:
         default=None,
     )
 
-    alcohol = alq[["SEQN", "ALQ101", "ALQ120Q"]].copy()
-    alcohol["current_alcohol"] = np.select(
-        [
-            alcohol["ALQ101"].eq(2) | alcohol["ALQ120Q"].eq(0),
-            alcohol["ALQ120Q"].between(1, 366),
-        ],
-        [0.0, 1.0],
-        default=np.nan,
-    )
-
     activity = paq[["SEQN", "PAQ650", "PAQ665"]].copy()
     activity["recreational_activity"] = np.select(
         [
@@ -203,7 +192,6 @@ def build_cycle(cycle: str) -> tuple[pd.DataFrame, pd.DataFrame]:
         depression[["SEQN", "phq9_total"]],
         mcq[["SEQN", "MCQ160F"]],
         smoking[["SEQN", "smoking_status"]],
-        alcohol[["SEQN", "current_alcohol"]],
         activity[["SEQN", "recreational_activity"]],
         ds30_total[["SEQN", "DSD010"]],
         form_by_person,
@@ -472,25 +460,6 @@ def run() -> None:
         "WTDRD1",
     )
 
-    lifestyle_vars = [
-        "smoking_status",
-        "current_alcohol",
-        "recreational_activity",
-    ]
-    lifestyle = complete_cases(complete, lifestyle_vars)
-    models["supplement_lifestyle"] = survey_wls(
-        lifestyle,
-        "global_cognition_complete",
-        [
-            "omega_user_30d",
-            "current_alcohol",
-            "recreational_activity",
-        ]
-        + CONTINUOUS_COVARIATES,
-        CATEGORICAL_COVARIATES + ["smoking_status"],
-        "WTMEC2YR",
-    )
-
     quantiles = np.array([0.05, 0.35, 0.65, 0.95])
     knots = weighted_quantile(
         dietary["log_dietary_epa_dha"].to_numpy(),
@@ -548,9 +517,6 @@ def run() -> None:
         "joint_energy_supplement": summarize_term(
             models["joint_energy"], "omega_user_30d"
         ),
-        "lifestyle_supplement": summarize_term(
-            models["supplement_lifestyle"], "omega_user_30d"
-        ),
         "exploratory_formulation": {
             "population": "Past-30-day omega-3 supplement users only",
             "reference": "Fish oil/cod liver oil",
@@ -580,7 +546,6 @@ def run() -> None:
             "accepted_complete_case": len(accepted),
             "complete_battery_complete_case": len(complete),
             "diet_reliable_complete_case": len(dietary),
-            "lifestyle_complete_case": len(lifestyle),
             "accepted_partial_battery_count": int(
                 (~accepted[COGNITIVE_COMPONENTS].notna().all(axis=1)).sum()
             ),
