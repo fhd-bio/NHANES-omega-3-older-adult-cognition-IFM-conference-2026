@@ -44,15 +44,6 @@
     "p_value": 0.0023191395261309626,
     "residual_df": 14
   },
-  "lifestyle_supplement": {
-    "n": 2098,
-    "estimate": 0.14226123022497494,
-    "standard_error": 0.039632394755793734,
-    "ci_low": 0.055909660060615374,
-    "ci_high": 0.22861280038933451,
-    "p_value": 0.0037167315108416876,
-    "residual_df": 12
-  },
   "exploratory_formulation": {
     "population": "Past-30-day omega-3 supplement users only",
     "reference": "Fish oil/cod liver oil",
@@ -115,7 +106,6 @@
     "accepted_complete_case": 2786,
     "complete_battery_complete_case": 2591,
     "diet_reliable_complete_case": 2453,
-    "lifestyle_complete_case": 2098,
     "accepted_partial_battery_count": 195,
     "accepted_24h_users": 565,
     "accepted_30d_users": 527
