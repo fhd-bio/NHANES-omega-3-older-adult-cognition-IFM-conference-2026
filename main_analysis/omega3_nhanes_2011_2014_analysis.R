@@ -11,9 +11,7 @@
 # Sensitivity analyses include an alternative recall-day supplement definition,
 # exclude self-reported stroke, add lifestyle covariates, and mutually adjust
 # dietary intake for supplement use and total energy.
-#
-# Run from the project directory:
-#   Rscript output/omega3_nhanes_2011_2014_analysis.R upload r_output
+
 
 required_packages <- c("haven", "survey", "dplyr")
 missing_packages <- required_packages[
