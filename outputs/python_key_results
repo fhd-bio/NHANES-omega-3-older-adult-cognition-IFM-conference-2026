@@ -1,0 +1,123 @@
+{
+  "accepted_24h_partial_battery": {
+    "n": 2786,
+    "estimate": 0.17465327899681982,
+    "standard_error": 0.037344868020415145,
+    "ci_low": 0.09548569538162338,
+    "ci_high": 0.25382086261201625,
+    "p_value": 0.00025259856924425225,
+    "residual_df": 16
+  },
+  "corrected_30d_complete_battery": {
+    "n": 2591,
+    "estimate": 0.15096604902937363,
+    "standard_error": 0.03518847885053274,
+    "ci_low": 0.07636980624259425,
+    "ci_high": 0.225562291816153,
+    "p_value": 0.0005620102034652986,
+    "residual_df": 16
+  },
+  "diet_correct_weight": {
+    "n": 2453,
+    "estimate": 0.21677920812966808,
+    "standard_error": 0.08766378149128531,
+    "ci_low": 0.030940293196518198,
+    "ci_high": 0.40261812306281797,
+    "p_value": 0.025001520081765045,
+    "residual_df": 16
+  },
+  "joint_energy_diet": {
+    "n": 2453,
+    "estimate": 0.2027610048456986,
+    "standard_error": 0.08962381271107021,
+    "ci_low": 0.010537044422556735,
+    "ci_high": 0.3949849652688404,
+    "p_value": 0.040107776288675734,
+    "residual_df": 14
+  },
+  "joint_energy_supplement": {
+    "n": 2453,
+    "estimate": 0.1428292180314455,
+    "standard_error": 0.038472343871928806,
+    "ci_low": 0.06031424704193648,
+    "ci_high": 0.2253441890209545,
+    "p_value": 0.0023191395261309626,
+    "residual_df": 14
+  },
+  "lifestyle_supplement": {
+    "n": 2098,
+    "estimate": 0.14226123022497494,
+    "standard_error": 0.039632394755793734,
+    "ci_low": 0.055909660060615374,
+    "ci_high": 0.22861280038933451,
+    "p_value": 0.0037167315108416876,
+    "residual_df": 12
+  },
+  "exploratory_formulation": {
+    "population": "Past-30-day omega-3 supplement users only",
+    "reference": "Fish oil/cod liver oil",
+    "subgroup_counts": {
+      "Fish oil/cod liver oil": 393,
+      "Plant-based": 53,
+      "Krill": 29,
+      "Other/mixed": 24
+    },
+    "overall_wald_test": {
+      "f_statistic": 0.7182438992439623,
+      "df1": 3,
+      "df2": 14,
+      "p_value": 0.5574249416324
+    },
+    "contrasts_vs_reference": {
+      "Krill": {
+        "n": 499,
+        "estimate": 0.02567752512101451,
+        "standard_error": 0.13654999280681623,
+        "ci_low": -0.26719308168631684,
+        "ci_high": 0.31854813192834586,
+        "p_value": 0.8535398446224487,
+        "residual_df": 14
+      },
+      "Plant-based": {
+        "n": 499,
+        "estimate": -0.12053339526920262,
+        "standard_error": 0.11406902269471314,
+        "ci_low": -0.36518711664861725,
+        "ci_high": 0.12412032611021198,
+        "p_value": 0.30855544539510155,
+        "residual_df": 14
+      },
+      "Other/mixed": {
+        "n": 499,
+        "estimate": -0.07617719080806895,
+        "standard_error": 0.10453929917942706,
+        "ci_low": -0.3003916880523607,
+        "ci_high": 0.14803730643622282,
+        "p_value": 0.47820195901159657,
+        "residual_df": 14
+      }
+    }
+  },
+  "spline_non_linearity": {
+    "knots_log_grams": [
+      1.0795210693868056e-78,
+      0.010939940038334364,
+      0.0372957847436969,
+      0.38418953338428385
+    ],
+    "f_statistic": 0.6733825747646801,
+    "df1": 2,
+    "df2": 12,
+    "p_value": 0.5282400973538518
+  },
+  "sample_flow": {
+    "eligible_age_60_plus": 3472,
+    "accepted_complete_case": 2786,
+    "complete_battery_complete_case": 2591,
+    "diet_reliable_complete_case": 2453,
+    "lifestyle_complete_case": 2098,
+    "accepted_partial_battery_count": 195,
+    "accepted_24h_users": 565,
+    "accepted_30d_users": 527
+  }
+}
